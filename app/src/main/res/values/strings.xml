@@ -1,0 +1,47 @@
+<resources>
+    <string name="app_name">T169 Train Schedule</string>
+    <string name="view_schedule">View Full Schedule</string>
+    <string name="search_btn">Search</string>
+    <string name="title_activity_schedule">Train Schedule</string>
+    <string name="price_range">$28 - $92</string>
+    <string name="action_settings">Settings</string>
+    <string name="title">T169 Train Schedule</string>
+    <string name="departure_station">Departure Station</string>
+    <string name="arrival_station">Arrival Station</string>
+    <string name="start_station">Shanghai South</string>
+    <string name="end_station">Guangzhou</string>
+    <string name="departure_time">Departure Time</string>
+    <string name="arrival_time">Arrival Time</string>
+    <string name="start_time">10:50am</string>
+    <string name="end_time">05:12am (Next Day)</string>
+    <string name="total_duration">Total Duration</string>
+    <string name="pricing">Price Range</string>
+    <string name="timing">18h 22m</string>
+    <string name="action_exit_app">Exit App</string>
+    <string name="action_about">About</string>
+    <string name="nav_open">Open</string>
+    <string name="nav_close">Close</string>
+    <string name="action_home">Home Page</string>
+    <string name="action_schedules">Train Schedule Page</string>
+    <string name="features">Features</string>
+    <string name="about_text">
+        \t\tT169 is a train route originating from Shanghai South at 10:50, and arriving at the final destination of Guangzhou at 05:17. The duration of the total journey is "1 day, 18 hours 28 minutes".\n\n
+
+        \t\tThere are 13 stops in total:\n
+            \t\t\t\t1. \tShanghai South\n
+            \t\t\t\t2. \tJiaXing\n
+            \t\t\t\t3. \tHaiNing\n
+            \t\t\t\t4. \tHangZhouDong (Hangzhou East)\n
+            \t\t\t\t5. \tYiWu\n
+            \t\t\t\t6. \tJinHua\n
+            \t\t\t\t7. \tQuZhou\n
+            \t\t\t\t8. \tShangRao\n
+            \t\t\t\t9. \tYingTan\n
+            \t\t\t\t10. \tJiAn\n
+            \t\t\t\t11. \tGanZhou\n
+            \t\t\t\t12. \tShaoGuanDong (Shaoguan East)\n
+            \t\t\t\t13. \tGuangZhou.\n\n
+
+        \tYou can purchase tickets starting at, and ending at any station. Ticket prices are set on a per kilometer basis.
+    </string>
+</resources>
