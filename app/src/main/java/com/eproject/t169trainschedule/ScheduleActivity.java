@@ -1,6 +1,7 @@
 package com.eproject.t169trainschedule;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -127,7 +128,8 @@ public class ScheduleActivity extends AppCompatActivity {
                 finish();
                 break;
             case R.id.exit_app:
-                finishAffinity();
+                // Confirming if the user wants to exit the app
+                confirmExit();
                 break;
             default:
                 break;
@@ -148,6 +150,20 @@ public class ScheduleActivity extends AppCompatActivity {
             super.onBackPressed();
             finish();
         }
+    }
+
+    // Creating the confirmExit method to confirm if the user wants to exit the app
+    public void confirmExit() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Exit App");
+        builder.setMessage("Are you sure you want to exit?");
+        builder.setCancelable(false);
+        // Setting the positive button to exit the app
+        builder.setPositiveButton("Yes", (dialog, which) -> finishAffinity());
+        // Setting the negative button to cancel the exit
+        builder.setNegativeButton("No", (dialog, which) -> dialog.cancel());
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
     // Creating the initializeAdapter method
