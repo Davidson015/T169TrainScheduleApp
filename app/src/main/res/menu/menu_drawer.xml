@@ -2,17 +2,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/home"
-            android:icon="@drawable/ic_baseline_home_24"
-            android:title="@string/action_home"/>
+    <item android:title="Pages">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/home"
+                    android:icon="@drawable/ic_baseline_home_24"
+                    android:title="@string/action_home"/>
 
-        <item
-            android:id="@+id/schedules"
-            android:icon="@drawable/ic_baseline_schedule_24"
-            android:title="@string/action_schedules"/>
-    </group>
+                <item
+                    android:id="@+id/schedules"
+                    android:icon="@drawable/ic_baseline_schedule_24"
+                    android:title="@string/action_schedules"/>
+            </group>
+        </menu>
+    </item>
 
     <item android:title="@string/features">
         <menu>
