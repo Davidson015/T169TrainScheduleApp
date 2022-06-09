@@ -32,13 +32,14 @@
             app:hintTextColor="@color/text_dark"
             app:startIconDrawable="@drawable/ic_baseline_train_24">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <AutoCompleteTextView
                 android:id="@+id/from"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/orange_3"
                 android:inputType="text"
                 android:maxLines="1"
+                android:paddingTop="20dp"
                 android:textColor="@color/text_dark" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -50,13 +51,14 @@
             app:hintTextColor="@color/text_dark"
             app:startIconDrawable="@drawable/ic_baseline_train_24">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <AutoCompleteTextView
                 android:id="@+id/to"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/orange_3"
                 android:inputType="text"
                 android:maxLines="1"
+                android:paddingTop="20sp"
                 android:textColor="@color/text_dark" />
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>

@@ -5,8 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -20,13 +25,15 @@ import com.google.android.material.textfield.TextInputEditText;
 public class HomeActivity extends AppCompatActivity {
 
     Button searchBtn, scheduleBtn;
-    TextInputEditText from, to;
+    AutoCompleteTextView from, to;
     DrawerLayout drawer;
     ActionBarDrawerToggle actionBarDrawerToggle;
     Toolbar toolbar;
     NavigationView navigationView;
     private long pressedTime;
+    String[] stations = {"Shanghai South", "JiaXing", "HaiNing", "Hangzhou East", "YiWu", "JinHua", "QuZhou", "ShangRao", "YingTan", "JiAn", "GanZhou", "Shaoguan East", "GuangZhou"};
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +44,26 @@ public class HomeActivity extends AppCompatActivity {
         // Getting the search Values from the layout
         from = findViewById(R.id.from);
         to = findViewById(R.id.to);
+
+        // Setting the adapter for the stations start and end in the autocomplete text view
+        from.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, stations));
+        to.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, stations));
+
+        // Showing AutoComplete options when input fields are clicked
+        from.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                from.showDropDown();
+                return true;
+            }
+        });
+        to.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                to.showDropDown();
+                return true;
+            }
+        });
 
         // Defining a Button to search through the schedule
         searchBtn = findViewById(R.id.search_btn);

@@ -52,8 +52,15 @@ public class ScheduleActivity extends AppCompatActivity {
         to_view = findViewById(R.id.to_view);
         from = getIntent().getStringExtra("from");
         to = getIntent().getStringExtra("to");
-        from_view.setText(from.toUpperCase());
-        to_view.setText(to.toUpperCase());
+
+        // Checking if from and to are in lowercase for better display
+        if (from.toLowerCase().equals(from) && to.toLowerCase().equals(to)) {
+            from_view.setText(from.toUpperCase().charAt(0) + from.substring(1).toLowerCase());
+            to_view.setText(to.toUpperCase().charAt(0) + to.substring(1).toLowerCase());
+        } else {
+            from_view.setText(from);
+            to_view.setText(to);
+        }
 
         // Getting the recyclerView from the layout
         recyclerView = findViewById(R.id.recyclerView);
@@ -230,18 +237,24 @@ public class ScheduleActivity extends AppCompatActivity {
                 // Calling the initializeAdapter method
                 initializeAdapter(adapter);
             } else {
-                List<Schedule> originalSchedules = scheduleList;
-                List<Schedule> filteredSchedules = filterSchedule(originalSchedules);
+                try {
+                    List<Schedule> originalSchedules = scheduleList;
+                    List<Schedule> filteredSchedules = filterSchedule(originalSchedules);
 
-                // Checking if filteredSchedules is empty
-                if (filteredSchedules.isEmpty()) {
-                    Toast.makeText(ScheduleActivity.this, "Destination not found.", Toast.LENGTH_SHORT).show();
-                } else {
-                    // Setting the adapter to the recyclerView
-                    adapter = new ItemScheduleAdapter(filteredSchedules);
+                    // Checking if filteredSchedules is empty
+                    if (filteredSchedules.isEmpty()) {
+                        Toast.makeText(ScheduleActivity.this, "Destination not found.", Toast.LENGTH_SHORT).show();
+                        finish();
+                    } else {
+                        // Setting the adapter to the recyclerView
+                        adapter = new ItemScheduleAdapter(filteredSchedules);
 
-                    // Calling the initializeAdapter method
-                    initializeAdapter(adapter);
+                        // Calling the initializeAdapter method
+                        initializeAdapter(adapter);
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(ScheduleActivity.this, "Make sure Destinations are along train route!", Toast.LENGTH_SHORT).show();
+                    finish();
                 }
             }
 
@@ -255,9 +268,9 @@ public class ScheduleActivity extends AppCompatActivity {
             while (iter.hasNext()) {
                 Schedule nextSchedule = iter.next();
 
-                if (nextSchedule.getStationName().equalsIgnoreCase(to)) {
+                if (nextSchedule.getStationName().toLowerCase().contains(to.toLowerCase())) {
                     end = nextSchedule;
-                } else if (nextSchedule.getStationName().equalsIgnoreCase(from)) {
+                } else if (nextSchedule.getStationName().toLowerCase().contains(from.toLowerCase())) {
                     start = nextSchedule;
                 }
             }

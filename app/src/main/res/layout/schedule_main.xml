@@ -21,14 +21,15 @@
         android:background="@color/orange_1"
         android:paddingStart="5sp"
         android:paddingTop="20sp"
+        android:weightSum="5"
         android:paddingEnd="5sp"
-        android:paddingBottom="20sp"
-        android:weightSum="5">
+        android:paddingBottom="20sp">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_weight="1"
             android:src="@drawable/ic_baseline_train_34" />
 
         <View
@@ -57,15 +58,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_weight="1"
             android:layout_marginEnd="15sp"
-            android:layout_weight="2"
             android:src="@drawable/ic_baseline_compare_arrows_24" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             app:prefixText="@string/arrival_station"
+            android:layout_weight="2"
             app:prefixTextColor="@color/sp_text">
 
             <TextView
