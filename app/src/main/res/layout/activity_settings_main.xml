@@ -33,4 +33,15 @@
             android:text="Use System Default" />
     </RadioGroup>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/sp_text"
+        android:layout_below="@id/radio_group"
+        android:gravity="center"
+        android:layout_marginTop="20sp"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:text="PS: App is set to follow System theme by default."/>
+
 </RelativeLayout>

@@ -2,7 +2,9 @@ package com.eproject.t169trainschedule;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.widget.RadioGroup;
@@ -23,6 +25,8 @@ public class SettingsActivity extends AppCompatActivity {
     Toolbar toolbar;
     NavigationView navigationView;
     RadioGroup radioGroup;
+
+    SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,31 +49,39 @@ public class SettingsActivity extends AppCompatActivity {
         navigationView = findViewById(R.id.nav_view);
         setupDrawerContent(navigationView);
 
+        // Initializing Preferences
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+
         // Initializing the RadioGroup
         radioGroup = findViewById(R.id.radio_group);
-        radioGroup.check(R.id.sys_default);
+        // Setting the checked radio button to the last selected one
+        radioGroup.check(preferences.getInt("last_checked", 0));
 
         // Checking and toggling the conditions respectively
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @SuppressLint("NonConstantResourceId")
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int mode) {
+                SharedPreferences.Editor editor = preferences.edit();
                 switch (mode) {
                     case R.id.light_mode:
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                        editor.putInt("last_checked", mode);
                         break;
 
                     case R.id.dark_mode:
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                        editor.putInt("last_checked", mode);
                         break;
 
                     case R.id.sys_default:
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-                        break;
-
-                    default:
+                        editor.putInt("last_checked", mode);
                         break;
                 }
+
+                // Applying Editor changes to the SharedPreferences
+                editor.apply();
             }
         });
     }
