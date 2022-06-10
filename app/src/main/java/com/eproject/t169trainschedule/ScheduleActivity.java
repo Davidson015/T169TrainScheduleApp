@@ -16,10 +16,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.eproject.t169trainschedule.model.Schedule;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONArray;
@@ -38,6 +40,7 @@ public class ScheduleActivity extends AppCompatActivity {
     Toolbar toolbar;
     NavigationView navigationView;
     TextView from_view, to_view;
+    ShimmerFrameLayout shimmer;
 
     RecyclerView recyclerView;
     Context context;
@@ -54,17 +57,21 @@ public class ScheduleActivity extends AppCompatActivity {
         from = getIntent().getStringExtra("from");
         to = getIntent().getStringExtra("to");
 
-        // Checking if from and to are in lowercase for better display
-        if (from.toLowerCase().equals(from) && to.toLowerCase().equals(to)) {
-            from_view.setText(from.toUpperCase().charAt(0) + from.substring(1).toLowerCase());
-            to_view.setText(to.toUpperCase().charAt(0) + to.substring(1).toLowerCase());
-        } else {
-            from_view.setText(from);
-            to_view.setText(to);
-        }
+        // Setting the Station Name Views
+        from_view.setText(from);
+        to_view.setText(to);
 
         // Getting the recyclerView from the layout
         recyclerView = findViewById(R.id.recyclerView);
+
+        // Getting Shimmer from the layout (Initializing it)
+        shimmer = findViewById(R.id.shimmer_view_container);
+
+        // Starting Shimmer Animation
+        shimmer.startShimmer();
+
+        // Setting the RecylcerView Visibility to Gone
+        recyclerView.setVisibility(View.GONE);
 
         // Setting the layout manager
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
@@ -98,10 +105,10 @@ public class ScheduleActivity extends AppCompatActivity {
     // Creating the setUpDrawerContent method
     private void setupDrawerContent(NavigationView navigationView) {
         navigationView.setNavigationItemSelectedListener(
-                menuItem -> {
-                    selectDrawerItem(menuItem);
-                    return true;
-                });
+            menuItem -> {
+                selectDrawerItem(menuItem);
+                return true;
+            });
     }
 
     // Creating the selectDrawerItem method to handle navigation item clicks
@@ -153,7 +160,7 @@ public class ScheduleActivity extends AppCompatActivity {
     }
 
     // Creating the confirmExit method to confirm if the user wants to exit the app
-    public void confirmExit() {
+    private void confirmExit() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Exit App");
         builder.setMessage("Are you sure you want to exit?");
@@ -170,6 +177,15 @@ public class ScheduleActivity extends AppCompatActivity {
     private void initializeAdapter(ItemScheduleAdapter adapter) {
         // Setting the adapter to the recyclerView
         recyclerView.setAdapter(adapter);
+
+        // Stopping the Shimmer Animation
+        shimmer.stopShimmer();
+
+        // Setting the view of the shimmer to gone
+        shimmer.setVisibility(View.GONE);
+
+        // Setting the view of the recyclerView to visible
+        recyclerView.setVisibility(View.VISIBLE);
     }
 
     // Getting Schedules from API
@@ -177,11 +193,17 @@ public class ScheduleActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+
+            // Starting the Shimmer Animation
+            shimmer.startShimmer();
+
+            // Notifying the user that the app is fetching the schedules
             Toast.makeText(ScheduleActivity.this, "Getting Schedules...", Toast.LENGTH_SHORT).show();
         }
 
         @Override
         protected List<Schedule> doInBackground(Void... voids) {
+            // Creating an instance of the HttpHandler class
             HttpHandler httpHandler = new HttpHandler();
 
             // Making a request to url and getting response
@@ -189,6 +211,8 @@ public class ScheduleActivity extends AppCompatActivity {
             String jsonStr = httpHandler.makeServiceCall(url);
 
             Log.e(MainActivity.class.getSimpleName(), "Response from url: " + jsonStr);
+
+            // Checking if the response is not null
             if(jsonStr != null) {
                 try {
                     JSONObject jsonObject = new JSONObject(jsonStr);
@@ -233,7 +257,7 @@ public class ScheduleActivity extends AppCompatActivity {
                 }
             } else {
                 Log.e(MainActivity.class.getSimpleName(), "Couldn't get json from server.");
-                runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Couldn't get Schedules from server.\nEnsure you have access to the internet.", Toast.LENGTH_LONG).show());
+                runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Couldn't get Schedules from server.\nEnsure you have internet access.", Toast.LENGTH_LONG).show());
             }
 
             return null;
